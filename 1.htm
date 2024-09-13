@@ -1,0 +1,98 @@
+<!-- Crie um programa onde o usuário possa cadastrar estudantes sem limites, e, em
+seguida, Se o usuário digitar "PARE" o programa deve exibir a quantidade de
+estudantes cadastrados e a lista com cada um deles. -->
+
+<!DOCTYPE html>
+<!-- 
+  ^~^  ,
+ ('Y') )
+ /   \/ 
+(\|||/) Made by GustavG
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alunos</title>
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="bg-light">
+    <div class="container mt-5">
+      <div class="mb-3">
+        <label for="nomeAluno" class="form-label"
+          >Digite o nome do aluno aqui:</label
+        >
+        <input
+          type="text"
+          id="nomeAluno"
+          class="form-control"
+          placeholder="Nome do aluno"
+        />
+      </div>
+
+      <button class="btn btn-primary mt-3" onclick="enviaDados()">
+        Cadastrar
+      </button>
+      <button class="btn btn-warning ml-3 mt-3" onclick="finaliza()">
+        Finalizar
+      </button>
+      <button class="btn btn-danger ml-3 mt-3" onclick="limpaArr()">
+        Limpar lista
+      </button>
+
+      <div id="resultado" class="mt-4"></div>
+    </div>
+
+    <!-- Lógica -->
+    <script>
+      function containsNumber(str) {
+        // Check if the string contains any digit between 0 and 9
+        return /\d/.test(str);
+        // RegEx, !medo!
+
+        // fonte: https://rswpthemes.com/how-to-check-if-a-string-contains-a-number-in-javascript/
+      }
+      var quantidade = 0;
+      alunosArr = [];
+
+      function enviaDados() {
+        try {
+          const aluno = document.getElementById("nomeAluno").value;
+          console.log(typeof aluno);
+
+          if (containsNumber(aluno) || !aluno) {
+            throw new Error("Digite um nome válido");
+          }
+
+          alunosArr.push(aluno);
+          quantidade++;
+        } catch (erro) {
+          console.error("Erro:" + erro);
+          alert("Erro: " + erro);
+        }
+      }
+
+      function finaliza() {
+        if (quantidade !== 0) {
+          document.getElementById("resultado").innerHTML = `
+        <div class="alert alert-info">
+            <p>Todos os ${quantidade} alunos: ${alunosArr.join(", ")}</p>
+        </div>
+        `;
+        }
+      }
+
+      function limpaArr() {
+        alunosArr = [];
+        quantidade = 0;
+        document.getElementById("resultado").innerHTML = ``;
+      }
+    </script>
+  </body>
+</html>

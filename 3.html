@@ -1,0 +1,111 @@
+<!-- Vamos criar uma lista de compras. 
+
+Crie uma array de frutas, exiba-a ao usuário e, em seguida, peça ao usuário para digitar o nome de uma das frutas.
+
+Caso a fruta esteja no array, remova-a e exiba a mensagem "Fruta foi retirada da lista". 
+
+Peça novamente para o usuário digitar o nome de uma fruta para ser removida. 
+
+Sempre que o usuário procurar por uma fruta que não está no array exiba a mensagem "Fruta indisponível no nosso mercado". 
+
+Quando o array não possuir mais itens dentro de si, escreva "Lista de compras finalizada". -->
+
+<!DOCTYPE html>
+<!-- 
+  ^~^  ,
+ ('Y') )
+ /   \/ 
+(\|||/) Made by GustavG
+-->
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h1 class="text-center">Lista de Compras</h1>
+
+        <!-- Exibição da lista de frutas -->
+        <h3>Frutas disponíveis:</h3>
+        <ul id="lista-frutas" class="list-group mb-3">
+            <!-- As frutas serão exibidas aqui -->
+        </ul>
+
+        <!-- Input para remover frutas -->
+        <div class="input-group mb-3">
+            <input type="text" id="fruta" class="form-control" placeholder="Digite o nome da fruta que deseja remover">
+            <button class="btn btn-danger" onclick="removerFruta()">Remover Fruta</button>
+        </div>
+
+        <!-- Mensagens para o usuário -->
+        <div id="mensagem" class="alert alert-info d-none"></div>
+    </div>
+
+    <script>
+        // Array de frutas
+        let frutas = ['Maçã', 'Banana', 'Laranja', 'Morango', 'Uva', 'Tâmara'];
+
+        // Exibir a lista de frutas ao carregar a página
+        function exibirLista() {
+            const listaFrutas = document.getElementById('lista-frutas');
+            listaFrutas.innerHTML = ''; // Limpa a lista antes de exibir
+            frutas.forEach(fruta => {
+                const li = document.createElement('li');
+                li.textContent = fruta;
+                li.classList.add('list-group-item');
+                listaFrutas.appendChild(li);
+            });
+        }
+
+        // Função para remover fruta da lista
+        function removerFruta() {
+            const frutaInput = document.getElementById('fruta').value;
+            const mensagemDiv = document.getElementById('mensagem');
+
+            // Verifica se a fruta está na lista
+            const index = frutas.indexOf(frutaInput); // Verifica onde (posição) está o obj com nome de (frutaInput), guarda no index
+            
+            if (index !== -1) { // Se a verificação não falhar:
+                // Remover a fruta
+                frutas.splice(index, 1); // remove o objeto na posição index => splice(posição a ser modificada, 1 // remove);
+                exibirLista(); // Atualizar a lista exibida
+
+                // Exibir a mensagem de sucesso
+                mensagemDiv.textContent = `${frutaInput} foi retirada da lista.`;
+                mensagemDiv.classList.remove('d-none', 'alert-danger'); // variavel.lista_de_classes_do_doc.remover(x,y,z,...)
+                mensagemDiv.classList.add('alert-success'); // mesmo de cima so que *.adiciona(x, ...)
+            } else {
+                // Exibir a mensagem de fruta indisponível
+                mensagemDiv.textContent = `${frutaInput} indisponível no nosso mercado.`;
+                mensagemDiv.classList.remove('d-none', 'alert-success');
+                mensagemDiv.classList.add('alert-danger');
+            }
+
+            // Verificar se a lista está vazia
+            if (frutas.length === 0) {
+                mensagemDiv.textContent = 'Lista de compras finalizada.';
+                mensagemDiv.classList.remove('d-none', 'alert-danger');
+                mensagemDiv.classList.add('alert-success');
+            }
+
+            // Limpar o campo de input
+            document.getElementById('fruta').value = '';
+        }
+
+        // Exibir a lista de frutas quando a página carregar
+        // Assim como no exercício da tabuada!
+        window.onload = exibirLista;
+    </script>
+
+</body>
+</html>
